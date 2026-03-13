@@ -1,0 +1,22 @@
+{
+  "name": "cuotiben",
+  "version": "1.0.0",
+  "description": "初二错题本 - 语数外历史道法物理，支持 AI 解析",
+  "scripts": {
+    "cap:sync": "npx cap sync",
+    "cap:android": "npx cap open android"
+  },
+  "capacitor": {
+    "appId": "com.cuotiben.app",
+    "appName": "错题本",
+    "webDir": "."
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/http": "^6.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  }
+}

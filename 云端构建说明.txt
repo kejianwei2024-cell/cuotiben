@@ -1,0 +1,33 @@
+========================================
+  错题本 - 推到云端并自动打 APK
+========================================
+
+一、先在本机准备好提交
+  双击运行：推送到GitHub.bat
+  （会初始化 Git、添加文件、提交一次）
+
+二、在 GitHub 上建仓库
+  1. 打开：https://github.com/new
+  2. Repository name 填：cuotiben（或别的英文名）
+  3. 选 Public
+  4. 不要勾选 "Add a README file"
+  5. 点 Create repository
+
+三、在「错题本」文件夹里推送
+  1. 按 Win+R，输入 cmd，回车
+  2. 输入（注意把 你的用户名 换成你的 GitHub 用户名）：
+     cd /d "c:\Users\kjw20\Desktop\新建文件夹\错题本"
+     git remote add origin https://github.com/你的用户名/cuotiben.git
+     git push -u origin main
+
+  3. 若提示要登录 GitHub：
+     - 浏览器会弹出，用你的 GitHub 账号登录授权即可
+     - 或到 GitHub → Settings → Developer settings → Personal access tokens 新建一个 token，推送时用 token 当密码
+
+四、下载 APK
+  1. 打开：https://github.com/你的用户名/cuotiben/actions
+  2. 点进最新一次 "Build Android APK" 运行
+  3. 等约 3～5 分钟，跑完后在页面下方 Artifacts 里点「错题本-APP」下载 zip
+  4. 解压得到 app-debug.apk，拷到手机安装即可
+
+========================================

@@ -1,0 +1,11 @@
+{
+  "name": "初二错题本",
+  "short_name": "错题本",
+  "description": "按学科管理错题，支持复习计划与统计",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "lang": "zh-CN"
+}

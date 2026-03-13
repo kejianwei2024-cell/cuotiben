@@ -1,0 +1,15 @@
+你的仓库地址：https://github.com/kejianwei2024-cell/cuotiben
+
+【最简单】双击运行：一键推送到你的仓库.bat
+  按提示在浏览器登录 GitHub 后即可完成推送。
+
+【手动】在「错题本」文件夹里打开 cmd，复制粘贴下面三行回车：
+
+cd /d "c:\Users\kjw20\Desktop\新建文件夹\错题本"
+git remote add origin https://github.com/kejianwei2024-cell/cuotiben.git
+git push -u origin main
+
+（若提示 remote 已存在，先执行：git remote set-url origin https://github.com/kejianwei2024-cell/cuotiben.git  再 push）
+
+推送成功后，打开下面链接等构建完成，在 Artifacts 里下载 APK：
+https://github.com/kejianwei2024-cell/cuotiben/actions

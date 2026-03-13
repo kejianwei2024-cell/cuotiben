@@ -1,0 +1,86 @@
+========================================
+  在 GitHub 网页上添加「Build Android APK」工作流
+========================================
+
+你当前看到的是「Get started with GitHub Actions」，说明仓库里还没有工作流文件。
+按下面在网页上建一个即可（不用改本机文件）。
+
+步骤：
+
+1. 打开仓库首页：
+   https://github.com/kejianwei2024-cell/cuotiben
+
+2. 点右上角「Add file」→「Create new file」
+
+3. 在「Name your file...」框里输入（必须一字不差）：
+   .github/workflows/build-apk.yml
+
+4. 把下面整段复制，粘贴到下面的大文本框里（会覆盖掉页面上自带的几行），
+   然后点最下面绿色按钮「Commit new file」。
+
+----------------------------------------
+粘贴内容开始（从 name: 到最后一行的 path: ...）
+----------------------------------------
+
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Add Android platform
+        run: npx cap add android || true
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept licenses
+        run: yes | sdkmanager --licenses || true
+
+      - name: Build debug APK
+        run: |
+          cd android
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: 错题本-APP
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+----------------------------------------
+粘贴内容结束
+----------------------------------------
+
+5. 保存后，点顶部「Actions」，
+   左边会出现「Build Android APK」，右边会有一条自动触发的运行。
+   等约 3～5 分钟变绿后，在 Artifacts 里下载「错题本-APP」即得 APK。
+
+注意：仓库里必须已经有错题本的代码（index.html、package.json 等），
+否则构建会失败。若你之前只建了空仓库、还没用「一键推送到你的仓库.bat」推过代码，
+请先在本机运行该 bat 推送一次，再按上面添加工作流。

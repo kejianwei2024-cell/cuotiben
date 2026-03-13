@@ -1,0 +1,8 @@
+{
+  "appId": "com.cuotiben.app",
+  "appName": "错题本",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  }
+}

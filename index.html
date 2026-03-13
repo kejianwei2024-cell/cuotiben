@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>初二错题本</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 顶部导航 -->
+    <header class="header">
+      <h1>错题本</h1>
+      <nav class="tabs">
+        <button type="button" class="tab active" data-tab="list">错题列表</button>
+        <button type="button" class="tab" data-tab="add">记错题</button>
+        <button type="button" class="tab" data-tab="review">今日复习</button>
+        <button type="button" class="tab" data-tab="stats">统计</button>
+        <button type="button" class="tab" data-tab="settings">设置</button>
+      </nav>
+    </header>
+
+    <!-- 错题列表 -->
+    <main id="panel-list" class="panel active">
+      <div class="filters">
+        <select id="filter-subject">
+          <option value="">全部学科</option>
+          <option value="语文">语文</option>
+          <option value="数学">数学</option>
+          <option value="英语">英语</option>
+          <option value="历史">历史</option>
+          <option value="道法">道法</option>
+          <option value="物理">物理</option>
+        </select>
+        <select id="filter-type">
+          <option value="">全部错因</option>
+          <option value="粗心">粗心</option>
+          <option value="概念不清">概念不清</option>
+          <option value="方法不会">方法不会</option>
+          <option value="审题错误">审题错误</option>
+          <option value="时间不够">时间不够</option>
+        </select>
+      </div>
+      <ul id="question-list" class="question-list"></ul>
+      <p id="list-empty" class="empty hidden">还没有错题，去「记错题」添加第一条吧</p>
+    </main>
+
+    <!-- 添加错题 -->
+    <main id="panel-add" class="panel">
+      <form id="form-add" class="form-add">
+        <label>学科</label>
+        <select name="subject" required>
+          <option value="语文">语文</option>
+          <option value="数学">数学</option>
+          <option value="英语">英语</option>
+          <option value="历史">历史</option>
+          <option value="道法">道法</option>
+          <option value="物理">物理</option>
+        </select>
+        <label>章节/单元</label>
+        <input type="text" name="chapter" placeholder="如：一元二次方程" />
+        <label>题目简述</label>
+        <div class="photo-ocr-row">
+          <button type="button" class="btn-photo" id="btn-photo-ocr">📷 拍照/选图识别</button>
+          <input type="file" id="input-photo-ocr" accept="image/*" capture="environment" class="hidden" />
+        </div>
+        <p id="photo-ocr-status" class="photo-ocr-status hidden"></p>
+        <textarea name="question" rows="3" placeholder="题目内容或关键条件（可简短），也可用上方拍照识别" required></textarea>
+        <label>错因类型</label>
+        <select name="errorType">
+          <option value="粗心">粗心</option>
+          <option value="概念不清">概念不清</option>
+          <option value="方法不会">方法不会</option>
+          <option value="审题错误">审题错误</option>
+          <option value="时间不够">时间不够</option>
+        </select>
+        <label>涉及知识点</label>
+        <input type="text" name="knowledge" placeholder="如：配方法、根的判别式" />
+        <label>错因简述</label>
+        <textarea name="cause" rows="2" placeholder="为什么错？"></textarea>
+        <label>正确思路/解法要点</label>
+        <textarea name="solution" rows="3" placeholder="正确做法或关键步骤"></textarea>
+        <label>难度</label>
+        <select name="difficulty">
+          <option value="简单">简单</option>
+          <option value="中等">中等</option>
+          <option value="困难">困难</option>
+        </select>
+        <button type="submit" class="btn-primary">保存错题</button>
+      </form>
+    </main>
+
+    <!-- 今日复习 -->
+    <main id="panel-review" class="panel">
+      <p id="review-hint" class="hint"></p>
+      <ul id="review-list" class="question-list"></ul>
+      <p id="review-empty" class="empty hidden">今天没有安排复习，或已全部复习完</p>
+    </main>
+
+    <!-- 统计 -->
+    <main id="panel-stats" class="panel">
+      <div class="stats-cards" id="stats-by-subject"></div>
+      <div class="stats-section">
+        <h3>错因分布</h3>
+        <div id="stats-by-type"></div>
+      </div>
+      <div class="stats-section">
+        <h3>最近错题</h3>
+        <ul id="stats-recent" class="question-list compact"></ul>
+      </div>
+    </main>
+
+    <!-- 设置（API 用于 AI 解析） -->
+    <main id="panel-settings" class="panel">
+      <div class="form-add">
+        <label>AI 解析服务</label>
+        <select id="settings-provider">
+          <option value="deepseek">DeepSeek</option>
+          <option value="doubao">豆包</option>
+        </select>
+        <label>API Key</label>
+        <input type="password" id="settings-apikey" placeholder="在开放平台获取，仅存于本机" autocomplete="off" />
+        <p class="hint small">DeepSeek: platform.deepseek.com · 豆包: 火山引擎控制台或豆包开放平台</p>
+        <label>豆包 模型（仅豆包时有效）</label>
+        <input type="text" id="settings-doubao-model" placeholder="如 doubao-pro-32k" value="doubao-pro-32k" />
+        <label>拍照识别用视觉模型（可选）</label>
+        <input type="text" id="settings-vision-model" placeholder="留空则用上面模型；豆包可填 doubao-vision-pro" />
+        <p id="settings-api-status" class="settings-api-status hidden"></p>
+        <button type="button" class="btn-secondary" id="settings-test-api">检测 API 连接</button>
+        <button type="button" class="btn-primary" id="settings-save">保存设置</button>
+      </div>
+    </main>
+
+    <!-- 错题详情（弹层） -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <button type="button" class="modal-close" aria-label="关闭">×</button>
+        <div id="modal-body"></div>
+        <div class="modal-ai">
+          <button type="button" class="btn-ai" id="btn-ai-parse">🤖 AI 解析</button>
+          <div id="modal-ai-result" class="ai-result hidden"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="btn-delete">删除</button>
+          <button type="button" class="btn-primary" id="btn-done-review">标记已复习</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>

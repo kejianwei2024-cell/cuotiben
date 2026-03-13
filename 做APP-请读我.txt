@@ -1,0 +1,39 @@
+========================================
+  错题本 - 做成 Android APP 步骤
+========================================
+
+一、避免中文路径（重要）
+   npm 在「新建文件夹」等中文路径下可能报错，建议先复制到英文路径再执行：
+   1. 把整个「错题本」文件夹复制到 C:\cuotiben
+      （即 C:\cuotiben 下有 index.html、package.json、js、css 等）
+
+二、安装依赖并生成 Android 工程
+   1. 按 Win+R，输入 cmd，回车打开命令提示符
+   2. 依次输入并回车：
+
+      cd /d C:\cuotiben
+
+      npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor/http --save
+
+      npx cap add android
+
+      npx cap sync
+
+   3. 若某一步报错，把完整报错内容记下来再排查（多数是未装 Node.js 或网络问题）
+
+三、编译 APK
+   1. 安装 Android Studio（未装的话）：https://developer.android.com/studio
+   2. 打开 Android Studio → File → Open → 选择 C:\cuotiben\android
+   3. 等待 Gradle 同步完成（右下角进度）
+   4. 菜单 Build → Build Bundle(s) / APK(s) → Build APK(s)
+   5. 编译完成后点通知里的 "locate" 或到目录里找：
+      C:\cuotiben\android\app\build\outputs\apk\debug\app-debug.apk
+
+四、安装到手机
+   把 app-debug.apk 传到手机（数据线、微信、网盘等），在手机上允许「未知来源」后安装即可。
+
+========================================
+  若已把错题本放在英文路径，可直接双击运行：
+  「复制到英文路径并构建.bat」
+  会复制到 C:\cuotiben 并执行 npm 与 cap 命令。
+========================================

@@ -1,0 +1,25 @@
+========================================
+  怎么找到「Build Android APK」
+========================================
+
+一、确认在正确页面
+  1. 打开：https://github.com/kejianwei2024-cell/cuotiben
+  2. 在仓库顶部有一排标签：Code | Issues | Pull requests | Actions | ...
+  3. 点「Actions」（不要点 Code）
+
+二、在 Actions 页面里
+  4. 左边有一列，上面是「All workflows」，下面会列出工作流名称
+  5. 找到并点击「Build Android APK」这一项
+  6. 右边会显示每次运行的记录；点进某一次，等它变绿完成后，在页面下方「Artifacts」里下载「错题本-APP」
+
+三、如果左边没有「Build Android APK」
+  说明仓库里还没有自动构建的配置文件，需要再推送一次（确保本地有 .github 文件夹）：
+  - 再双击运行一次「一键推送到你的仓库.bat」
+  - 推送成功后，刷新 Actions 页面，或等几秒再点一下 Actions，左边就会出现「Build Android APK」
+
+四、也可以直接看「所有运行记录」
+  - 在 Actions 页面，右边中间是「All workflows」的运行列表
+  - 若你刚推送过，列表里会有一条「Build Android APK」在跑或已跑完
+  - 直接点那一条进去，跑完后在下面 Artifacts 下载即可
+
+========================================
